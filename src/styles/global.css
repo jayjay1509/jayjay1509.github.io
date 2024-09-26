@@ -42,6 +42,16 @@ body {
 	font-size: 20px;
 	line-height: 1.7;
 }
+
+body2 {
+	background-image: url('/res/tst.jpg'); /* Chemin vers l'image */
+	background-size: cover; /* Pour que l'image couvre tout l'arrière-plan */
+	background-position: center; /* Pour centrer l'image */
+	background-repeat: no-repeat; /* Pour éviter de répéter l'image */
+	height: 100vh; /* Pour s'assurer que le body prend toute la hauteur de la fenêtre */
+	margin: 0; /* Pour éviter les marges par défaut */
+}
+
 main {
 	width: 720px;
 	max-width: calc(100% - 2em);

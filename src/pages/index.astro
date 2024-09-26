@@ -9,8 +9,19 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 <html lang="fr">
 <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+        body {
+            background-image: url('/res/test2.gif'); /* Chemin vers le GIF */
+            background-size: cover; /* Pour que le GIF couvre tout l'arrière-plan */
+            background-position: center; /* Pour centrer le GIF */
+            background-repeat: no-repeat; /* Pour éviter de répéter le GIF */
+            height: 100vh; /* Pour s'assurer que le body prend toute la hauteur de la fenêtre */
+            margin: 0; /* Pour éviter les marges par défaut */
+        }
+    </style>
 </head>
 <body>
+
 <Header />
 <main>
     <h1>🧑👋 Bonjour et bienvenue sur ma page !</h1>
@@ -20,13 +31,12 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
     <p>
         Vous trouverez ici des informations sur mes réalisations, ainsi que des articles et des tutoriels sur des sujets qui me passionnent.
     </p>
-    <p> N'hésitez pas à explorer et à me contacter si vous avez des questions ou si vous souhaitez discuter de projets !</p>
+    <p>N'hésitez pas à explorer et à me contacter si vous avez des questions ou si vous souhaitez discuter de projets !</p>
     <ul>
-
+        <!-- Ajoutez du contenu ici si nécessaire -->
     </ul>
     <p>
         Amusez-vous bien ! Si vous avez besoin d'aide, consultez ma page github <a href="https://github.com/jayjay1509">Github</a>
-
     </p>
 </main>
 <Footer />
