@@ -5,6 +5,14 @@ pubDate: '11.11.2024'
 heroImage: '/namakemono.jpg'
 ---
 
+---
+<video controls style="width: 100%; height: auto;">
+  <source src="/test3.mp4" type="video/mp4">
+  Votre navigateur ne supporte pas la lecture de vidéos.
+</video>
+---
+
+
 ## Introduction to the Body Class
 
 For my physics engine, I created the **Body** class to represent physical objects with fundamental properties such as position, velocity, acceleration, mass, angle, and angular velocity. This class is designed for flexibility and can be easily extended to simulate various physical behaviors.
@@ -23,13 +31,6 @@ The **Body** class has methods to apply forces, which update acceleration based 
 
 ### Conclusion
 The **Body** class forms the foundation of my physics engine, enabling realistic and dynamic simulations. Its extensible design allows it to easily adapt to various simulation needs.
-
----
-<video controls>
-  <source src="/test3.mp4" type="video/mp4">
-  Votre navigateur ne supporte pas la lecture de vidéos.
-</video>
----
 
 ## Introduction to the Shape Class
 
