@@ -7,143 +7,106 @@ heroImage: '/namakemono.jpg'
 
 ## Introduction to the Body Class
 
-As part of my physics engine project, I created the Body class to represent physical objects with basic properties such as position, velocity, acceleration, and mass. This class is designed to be flexible and extensible, allowing for the modeling of various physical behaviors.
+For my physics engine, I created the **Body** class to represent physical objects with fundamental properties such as position, velocity, acceleration, mass, angle, and angular velocity. This class is designed for flexibility and can be easily extended to simulate various physical behaviors.
 
-### Properties of the Body Class
-
-The Body class contains several essential properties. Position, velocity, and acceleration are represented by 2D vectors (Vec2), initialized to zero. Mass is initialized to 1.0 by default. I have also added properties for angle and angular velocity to simulate rotations, which is crucial for orbital movements and object rotations.
+### Key Properties
+The **Body** class includes vectors for position, velocity, and acceleration (initialized to zero), and a default mass of 1.0. It also supports angle and angular velocity to simulate rotation, which is essential for modeling orbital movements and object rotations.
 
 ### Flexible Constructors
-
-To ease the creation of Body objects, I implemented several constructors. These constructors allow you to initialize a Body object with different combinations of parameters, such as position only, position and velocity, or position and mass. This provides great flexibility when instantiating objects based on the specific needs of the simulation.
+Several constructors are implemented to provide flexibility when creating **Body** objects, allowing you to initialize objects with combinations of position, velocity, and mass.
 
 ### Property Management
+Methods for getting and setting the internal properties of a **Body** are included. This makes it simple to adjust and retrieve the position, velocity, acceleration, mass, angle, and angular velocity.
 
-I defined methods to access and modify the internal properties of the Body object. These methods include getters to retrieve position, velocity, acceleration, mass, angle, and angular velocity. Additionally, setters allow you to set new values for these properties. This enables easy manipulation of Body objects within the simulation.
-
-### Applying Forces and Updating Properties
-
-The Body class includes methods to apply forces, which update the object's acceleration based on the applied force and its mass. A method is also available to reset the applied forces. The positions and angles of the objects are updated according to their velocities and elapsed time, allowing for realistic movement simulations over time.
+### Applying Forces and Updating
+The **Body** class has methods to apply forces, which update acceleration based on force and mass. The positions and angles are updated based on velocity and time, simulating realistic movement over time.
 
 ### Conclusion
-
-The Body class provides a solid foundation for modeling physical objects in a simulation engine. With well-defined properties and methods for managing forces and movements, this class enables the creation of realistic and dynamic simulations. Its modular and flexible approach makes it easy to extend and adapt the class to the specific needs of any physics simulation project.
+The **Body** class forms the foundation of my physics engine, enabling realistic and dynamic simulations. Its extensible design allows it to easily adapt to various simulation needs.
 
 ---
 
 ## Introduction to the Shape Class
 
-To enrich my physics engine, I created the Shape class, which manages different geometric shapes such as circles, squares, rectangles, and polygons. This class includes several essential functionalities for defining and manipulating these shapes.
+To complement the **Body** class in my engine, I created the **Shape** class to handle various geometric shapes like circles, squares, rectangles, and polygons.
 
-### Properties of the Shape Class
-
-The Shape class has several properties, including size (or dimensions for rectangles), shape type, color, and an instance of the Body class to represent physical properties like position and mass. Additional properties include minimum and maximum bounds to delimit the shape, as well as indicators for the shape's state (initialized, trigger, static).
+### Key Properties
+The **Shape** class has properties such as size (or dimensions for rectangles), shape type, color, and a **Body** instance for position and mass. It also tracks the shape’s state (initialized, static) and its bounding box.
 
 ### Flexible Constructors
-
-To allow for flexible creation of Shape objects, I implemented multiple constructors. The first constructor initializes a shape with a size, a physical body, and a shape type. The second constructor allows specifying dimensions for rectangles, thus facilitating the creation of rectangular shapes with different sizes for the X and Y axes.
+Multiple constructors allow for flexible creation of **Shape** objects. One initializes the shape with a size, physical body, and type, while another supports specific dimensions for rectangles.
 
 ### Property Management
+Getters and setters for shape properties (like size, color, number of sides for polygons) allow for easy manipulation within the simulation.
 
-The Shape class includes methods to access and modify its internal properties. For example, you can get and set the size, the number of sides (for polygons), the color, and check if the shape is static or initialized. These methods allow for flexible manipulation of Shape objects within the simulation.
-
-### Bounding Box Calculation and Containment Check
-
-The minimum and maximum bounds of each shape are calculated based on its position and dimensions. A Contains method checks if a given point is inside the shape's bounds. This method is specific to the type of shape: for squares and rectangles, it checks the coordinates against the bounds, while for circles, it calculates the distance from the center of the shape.
+### Bounding Box and Containment Check
+Bounding box calculations help determine the minimum and maximum extents of a shape, while the **Contains** method checks if a point lies within the shape, with specific checks for different shapes (e.g., distance from the center for circles).
 
 ### Mass-to-Color Conversion
-
-A private method converts the mass of the Body object into a color by normalizing the mass to generate a color based on the defined minimum and maximum mass scale. This allows visualizing the mass differences between shapes through color variations, where higher mass corresponds to a redder color and lower mass to a bluer one.
+A private method converts the mass of the **Body** into a color, making it visually apparent how mass affects a shape.
 
 ### Conclusion
-
-The Shape class provides robust and flexible management of geometric shapes in my physics engine. By combining physical properties with shape-specific functionalities, this class enables the creation of rich and dynamic simulations where each shape can interact realistically with its environment.
+The **Shape** class enriches my physics engine by providing robust management for geometric shapes. It facilitates dynamic simulations where each shape interacts with its environment realistically.
 
 ---
 
 ## Introduction to the Quadtree Class
 
-To optimize collision management and detection in my physics engine, I implemented a data structure called Quadtree. This structure is particularly efficient for organizing objects in a 2D space, improving performance during collision checks between shapes.
+To improve collision detection efficiency in my engine, I implemented the **Quadtree** class. This data structure organizes objects in 2D space and optimizes collision checks.
 
-### Properties of the Quadtree Class
-
-The Quadtree class is initialized with a set of shapes (Shape) and divides the space into quadrants to facilitate object search and management. Key properties include the bounds of the region covered by the quadtree (min_bound_ and max_bound_), as well as the central position (pos_) and dimensions (size_x_ and size_y_) of the region.
+### Key Properties
+The **Quadtree** divides the space into quadrants, storing shapes and optimizing space management. Key properties include bounds (min and max), central position, and dimensions.
 
 ### Flexible Constructors
-
-To create a Quadtree, I implemented two constructors. The first initializes a quadtree covering the entire area defined by width and height constants (WIDTH and HEIGHT). The second constructor allows specifying a particular position and dimensions, which is useful when creating sub-quadrants during space division.
+Two constructors are available: one for covering the entire area and another for defining specific regions when creating sub-quadrants.
 
 ### Managing Children and Shapes
+The **Quadtree** can recursively contain child quadrants. Methods like **AddChild** and **CountShape** facilitate space subdivision and shape counting, while **AddShape** and **Contains** manage shapes within the quadtree.
 
-The Quadtree can contain children, which are themselves instances of Quadtree, allowing for recursive space subdivision. I included methods to add children (AddChild) and to count the shapes in each quadrant (CountShape). The Contains method checks if a given position is inside the bounds of the quadtree, and the AddShape method adds new shapes.
-
-### Division and Optimization
-
-The Divide method divides the quadtree into four sub-quadrants, each being a new Quadtree instance. This allows distributing shapes more efficiently and reduces the number of checks needed to detect collisions. Another method, Divide_1, can be used for specific divisions or additional optimizations.
+### Space Division and Optimization
+The **Divide** method splits the **Quadtree** into four sub-quadrants, distributing shapes for more efficient collision detection.
 
 ### Shape Retrieval
-
-The Retrieve method retrieves all the shapes contained in the quadtree and its children, which is crucial for performing collision checks on a subset of the shapes present in the space. This significantly improves performance by reducing the number of comparisons to make.
+The **Retrieve** method gathers all shapes within the **Quadtree** and its children, reducing the number of comparisons needed for collision checks.
 
 ### Conclusion
-
-The Quadtree class is a critical component of my physics engine, enabling efficient object management and fast collision detection. By recursively dividing the space and organizing shapes into quadrants, the quadtree optimizes simulation performance, ensuring a smoother and more responsive experience.
+The **Quadtree** class significantly boosts the performance of my physics engine by optimizing shape management and collision detection through space division.
 
 ---
 
 ## Introduction to the Graphics Class
 
-To render shapes and handle display in my physics engine, I developed the Graphics class. This class uses SDL2 to draw various geometric shapes and display the quadrants of the Quadtree structure. Here is a brief explanation of its functionalities and role within the engine.
+The **Graphics** class handles rendering shapes in my physics engine using SDL2. It provides methods to draw geometric shapes and visualize the **Quadtree** structure.
 
 ### Initialization and Configuration
-
-The Graphics class is initialized with an SDL_Renderer that handles the rendering of objects to the screen. I added a SetDrawColor method that allows setting the drawing color by specifying RGBA values. This makes it easy to change the color of different shapes being drawn.
+The **Graphics** class is initialized with an **SDL_Renderer**, which is used to draw shapes. The **SetDrawColor** method allows dynamic color changes during rendering.
 
 ### Drawing Shapes
-
-I implemented several methods to draw specific shapes:
-- DrawSquare: This method takes a Shape object representing a square and draws it on the screen.
-- DrawRec: Similar to DrawSquare, but for rectangles.
-- DrawShape: A generic method that decides which type of shape to draw based on the attributes of the Shape object.
-
-### Managing Circles and Polygons
-
-To draw circles and polygons, I included specific methods:
-- initializeCircleVertices: Initializes the vertices needed to draw a circle.
-- updateCirclePosition: Updates the position of the circle's vertices based on its new position.
-- initializePolygonVertices and updatePolygonPosition: Similar functions for polygons, allowing for initialization and updating their vertices.
+Several methods are used to render specific shapes:
+- **DrawSquare** and **DrawRec** handle squares and rectangles.
+- **DrawShape** determines the appropriate drawing method for different shape types.
+- Methods for circles and polygons manage their vertices and positions.
 
 ### Rendering the Quadtree
-
-To visualize the Quadtree structure, I added a DrawQuadtree method. This method draws the boundaries of each quadrant, which is useful for debugging and optimizing collision management. The depth parameter controls how deep the quadrants are drawn.
+A **DrawQuadtree** method visualizes the **Quadtree** structure, helping with debugging and collision management.
 
 ### Final Rendering
-
-The render method is called to update the display and draw all the shapes on the screen. It ensures that all drawing operations are completed before refreshing the window.
+The **Render** method updates the screen, ensuring all drawing operations are completed before refreshing the display.
 
 ### Conclusion
-
-The Graphics class is essential for visual rendering in my physics engine. It provides drawing functionalities for different geometric shapes and allows for visualizing the Quadtree structure, thus aiding the development and debugging of the engine. Thanks to SDL2, the rendering is both efficient and flexible, meeting the needs of the project.
+The **Graphics** class is essential for rendering in my engine, offering flexibility for drawing shapes and visualizing the **Quadtree** structure to aid development.
 
 ---
 
 ## Introduction to the Collider Class
 
-To manage collisions between objects in my physics engine, I developed the Collider class. This class checks collisions between various geometric shapes as well as with the window boundaries. It plays a crucial role in maintaining the integrity of physical simulations. Here is an overview of its key functionalities.
+The **Collider** class manages collision detection between shapes and the window boundaries, ensuring accurate interactions in the physics simulation.
 
 ### Managing Collisions with the Window
-
-The CheckCollideWindow method checks if a given shape collides with the window's edges. This prevents objects from going off-screen, adjusting their position or velocity as necessary.
+The **CheckCollideWindow** method prevents shapes from going off-screen by adjusting their position or velocity when they collide with the window's edges.
 
 ### Shape-to-Shape Collision Detection
-
-The CheckCollision method checks if two given shapes, shapeA and shapeB, are colliding. It uses the properties of the shapes (such as their position and size) to determine if there is an overlap between them.
-
-### Handling Object Collisions
-
-The CheckCollideShapes method iterates over a list of shapes and checks for collisions between them. This allows handling physical interactions between multiple objects in the simulation. Additionally, the CheckCollideShapesNoWindow method performs a similar check, excluding the boundary check.
+The **CheckCollision** method detects collisions between two shapes by comparing their position and size. The **CheckCollideShapes** method checks multiple shapes for collisions, and **CheckCollideShapesNoWindow** does the same without checking for boundary collisions.
 
 ### Conclusion
-
-The Collider class is crucial for the collision management in my physics engine. By checking collisions between shapes and handling interactions with the window boundaries, it ensures that the physical simulation remains accurate and responsive. The Collider class optimizes the process of detecting and resolving collisions, helping maintain the stability of the simulation.
- 
+The **Collider** class ensures the integrity of the simulation by accurately detecting and resolving collisions, preventing shapes from moving out of bounds, and maintaining a realistic interaction between objects.
