@@ -1,7 +1,7 @@
 ---
 title: 'Namakemono'
 description: 'Lorem ipsum dolor sit amet'
-pubDate: '11.11.2024'
+pubDate: '19.11.2024'
 heroImage: '/namakemono.jpg'
 ---
 
@@ -12,20 +12,21 @@ heroImage: '/namakemono.jpg'
 </video>
 ---
 
-### What's Namakemono Engine ?
+
+### What is Namakemono Engine?
 
 Namakemono Engine is a small physic engine made in C++ .
 
-### What's in Namakemono Engine ?
+### What does Namakemono Engine do?
 
-In Namakemono Engine you can :
-- apply a forces to an object 
-- have colision that uses weight
-- set an object as trigger
+In Namakemono Engine, you can:
+- Apply forces to an object. 
+- Apply forces to an object.
+- Set an object as a trigger.
 
-## How does Namakemono Engine apply forces ?
+## How does Namakemono Engine apply forces?
 
-Namakemono Engine uses a self made vector2D to apply forces. In this scene that simulate a solar systeme using gravity and a starting force we can see planetes turning around a sun.
+Namakemono Engine uses a custom Vector2D class to apply forces. In this scene, which simulates a solar system using gravity and an initial force, we can see planets orbiting around a sun.
 
 ---
 <video controls style="width: 100%; height: auto;">
@@ -33,9 +34,9 @@ Namakemono Engine uses a self made vector2D to apply forces. In this scene that 
   Votre navigateur ne supporte pas la lecture de vidéos.
 </video>
 
-## How does Namakemono Engine manage colisions ?
+## How does Namakemono Engine handle collisions?
 
-At first it check the collisions between an object and all the other objects and do this for evry objects 
+Initially, it checks collisions between each object and every other object. This is done for all objects.
 
 ---
 <video controls style="width: 100%; height: auto;">
@@ -44,7 +45,7 @@ At first it check the collisions between an object and all the other objects and
 </video>
 
 
-Then we implemented a Quadtree witch divide the screen if their is too much shape inside and keep dividing itself until there is a predefined number of shape inside and then it check collision for each part of the Quadtree individually.
+Then, we implemented a Quadtree, which divides the screen if there are too many shapes. It keeps dividing itself until there is a predefined number of shapes inside each section, and then it checks collisions for each part of the Quadtree individually.
 
 ---
 <video controls style="width: 100%; height: auto;">
@@ -53,9 +54,9 @@ Then we implemented a Quadtree witch divide the screen if their is too much shap
 </video>
 
 
-## How does Namakemono Engine manage trigger ?
+## How does Namakemono Engine manage triggers?
 
-Triggers are an option that a shape can have to detect if there is any other shape is touching the trigger shape. In this scene we see the shape turning red when the shape are touching each other.
+Triggers are an option that a shape can have to detect if any other shape is touching the trigger shape. In this scene, we see the shape turning red when the shapes are touching each other.
 
 ---
 <video controls style="width: 100%; height: auto;">
@@ -66,14 +67,12 @@ Triggers are an option that a shape can have to detect if there is any other sha
 
 ## Test
 
-to try the engine we wanted to test the solar system simulation with collision and their are the results.
-
+To test the engine, we tried the solar system simulation with collisions, and here are the results.
 ---
 <video controls style="width: 100%; height: auto;">
   <source src="/solar_colision.mp4" type="video/mp4">
   Votre navigateur ne supporte pas la lecture de vidéos.
 </video>
-
 
 ## Introduction to the Body Class
 
