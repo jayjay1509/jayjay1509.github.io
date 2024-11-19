@@ -48,7 +48,6 @@ A private method converts the mass of the **Body** into a color, making it visua
 ### Conclusion
 The **Shape** class enriches my physics engine by providing robust management for geometric shapes. It facilitates dynamic simulations where each shape interacts with its environment realistically.
 
----
 
 ## Introduction to the Quadtree Class
 
@@ -110,3 +109,8 @@ The **CheckCollision** method detects collisions between two shapes by comparing
 
 ### Conclusion
 The **Collider** class ensures the integrity of the simulation by accurately detecting and resolving collisions, preventing shapes from moving out of bounds, and maintaining a realistic interaction between objects.
+
+
+---
+![Body Class Example GIF](/test2.gif)
+---
