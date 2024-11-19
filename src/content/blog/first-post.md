@@ -2,7 +2,7 @@
 title: 'Namakemono'
 description: 'Lorem ipsum dolor sit amet'
 pubDate: '11.11.2024'
-heroImage: '/blog-placeholder-3.jpg'
+heroImage: '/namakemono.jpg'
 ---
 
 ## Introduction to the Body Class
@@ -146,4 +146,4 @@ The CheckCollideShapes method iterates over a list of shapes and checks for coll
 ### Conclusion
 
 The Collider class is crucial for the collision management in my physics engine. By checking collisions between shapes and handling interactions with the window boundaries, it ensures that the physical simulation remains accurate and responsive. The Collider class optimizes the process of detecting and resolving collisions, helping maintain the stability of the simulation.
- lala 
+ 
