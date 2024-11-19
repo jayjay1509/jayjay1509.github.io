@@ -75,7 +75,6 @@ to try the engine we wanted to test the solar system simulation with collision a
 </video>
 
 
-
 ## Introduction to the Body Class
 
 For my physics engine, I created the **Body** class to represent physical objects with fundamental properties such as position, velocity, acceleration, mass, angle, and angular velocity. This class is designed for flexibility and can be easily extended to simulate various physical behaviors.
