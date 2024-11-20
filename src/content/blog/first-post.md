@@ -1,7 +1,7 @@
 ---
 title: 'Namakemono'
 description: 'Lorem ipsum dolor sit amet'
-pubDate: '19.11.2024'
+pubDate: '2024-11-20'
 heroImage: '/namakemono.jpg'
 ---
 
