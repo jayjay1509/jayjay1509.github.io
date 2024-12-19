@@ -195,4 +195,4 @@ The **Collider** class ensures the integrity of the simulation by accurately det
 
 ---
 ![Body Class Example GIF](/test2.gif)
---- je voudrais avoir un index
+---

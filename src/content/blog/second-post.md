@@ -1,16 +1,92 @@
 ---
-title: 'Second post'
-description: 'Lorem ipsum dolor sit amet'
-pubDate: 'Jul 15 2022'
-heroImage: '/blog-placeholder-4.jpg'
+title: 'Shader Dynamique pour Sprites Animés'
+description: 'Un shader animé avec des couleurs arc-en-ciel et des sprites en mouvement pour des effets visuels dynamiques.'
+pubDate: '2024-12-19'
+heroImage: '/namakemono.jpg'
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+## Résumé
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+1. [Présentation du Shader](#présentation-du-shader)
+2. [Détails du Code](#détails-du-code)
+    - [Fonction `rand`](#fonction-rand)
+    - [Fonction `rainbow`](#fonction-rainbow)
+    - [Calcul des Positions des Sprites](#calcul-des-positions-des-sprites)
+    - [Mélange des Couleurs et Animation](#mélange-des-couleurs-et-animation)
+3. [Conclusion](#conclusion)
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+---
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+<video controls style="width: 100%; height: auto;">
+  <source src="/test3.mp4" type="video/mp4">
+  Votre navigateur ne supporte pas la lecture de vidéos.
+</video>
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+---
+
+## Présentation du Shader
+
+Dans ce post, je vais expliquer comment j'ai créé un shader dynamique qui génère des sprites animés avec un effet de couleur arc-en-ciel. Chaque sprite se déplace légèrement de manière aléatoire et change de couleur au fil du temps, créant un effet visuel attrayant pour des applications graphiques en temps réel. Ce shader utilise GLSL et repose sur des principes de base comme la manipulation des positions et des couleurs à l’aide du temps.
+
+## Détails du Code
+
+### Fonction `rand`
+
+La fonction `rand` génère une valeur pseudo-aléatoire basée sur un vecteur d'entrée. Elle utilise des fonctions mathématiques comme `sin` et `dot` pour produire un bruit qui permet de décaler légèrement la position des sprites, afin d'éviter qu'ils ne soient trop réguliers dans leur disposition.
+
+```glsl
+float rand(vec2 co) {
+    float timeSeed = iTime * 1000.0;
+    return fract(sin(dot(co , vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+
+
+### Fonction rainbow(float t)
+La fonction rainbow génère un dégradé de couleurs basé sur le temps t. Elle utilise une combinaison de valeurs trigonométriques pour créer un effet de cycle de couleurs arc-en-ciel. Cela ajoute un effet dynamique aux sprites, qui changent de couleur au fur et à mesure que le temps avance.
+
+```glsl
+vec3 rainbow(float t) {
+    return 0.5 + 0.5 * cos(t + vec3(0.0, 2.0, 4.0));
+}
+```
+
+### La Fonction mainImage
+C'est ici que la magie opère. La fonction mainImage est responsable de l'affichage des sprites. Le fragment shader prend les coordonnées de l'écran (dans fragCoord) et les normalise en coordonnées de texture avec uv. Ensuite, il définit le nombre de sprites à afficher sur l'axe x et y avec les variables numSpritesX et numSpritesY.
+
+```glsl
+vec2 uv = fragCoord.xy / iResolution.xy;
+int numSpritesX = 10;
+int numSpritesY = 10;
+```
+
+Le temps est également utilisé pour animer les sprites avec `frame = floor(mod(iTime * 10.0, 6.0));`, ce qui crée une animation en fonction du temps. Le `frame` permet de changer les sprites au fur et à mesure que le temps passe, en leur donnant une sensation de changement d'état.
+
+### Position des Sprites et Déplacement Aléatoire
+Les positions des sprites sont calculées dans la boucle imbriquée pour les axes x et y. La position initiale est déterminée par les coordonnées de la grille, mais j'ajoute une composante aléatoire pour que chaque sprite ait un petit décalage. De plus, chaque sprite se déplace au fil du temps avec un effet sinusoïdal, ce qui donne un mouvement fluide.
+
+```glsl
+vec2 spritePos = vec2(float(x) * spacingX, float(y) * spacingY);
+vec2 randomOffset = vec2(rand(vec2(float(x), float(y))), rand(vec2(float(x) + 1.0, float(y) + 1.0)));
+spritePos += randomOffset * spacingX;
+spritePos.x += sin(iTime * 5.0 + float(x)) * 0.18;
+spritePos.y += sin(iTime * 5.0 + float(y)) * 0.18;
+```
+
+### Mélange des Couleurs et Animation
+Ensuite, je mélange la couleur de base avec celle du sprite. J'utilise l'effet arc-en-ciel généré précédemment pour créer une traînée colorée. Cette traînée suit les sprites à mesure qu'ils se déplacent. Le calcul de l'alpha permet de mélanger progressivement les couleurs du sprite avec la couleur d'arrière-plan, tout en prenant en compte la transparence des pixels du sprite.
+
+```glsl
+float rainbowTime = iTime + length(spritePos);  
+vec3 rainbowColor = rainbow(rainbowTime * 0.5); 
+vec3 trailColor = rainbowColor * 0.6; 
+baseColor.rgb = mix(baseColor.rgb, trailColor, 0.5);
+```
+
+L'effet arc-en-ciel est combiné avec la couleur du sprite à chaque étape de l'animation, ce qui donne une sensation de mouvement fluide et coloré.
+
+## Résultat Final
+Le résultat final est une grille de sprites animés qui se déplacent légèrement tout en affichant un dégradé arc-en-ciel dynamique. Cela crée un effet visuel intéressant et vibrant, avec des couleurs qui évoluent lentement au fur et à mesure que le temps passe.
+
+## Conclusion
+Ce shader est un excellent exemple de la façon dont on peut manipuler les couleurs et les positions des objets en temps réel dans un shader GLSL. En utilisant des fonctions comme rand, sin, et cos, on peut obtenir des effets visuels fluides et dynamiques qui réagissent au temps et à l'environnement. Cela offre une grande flexibilité pour créer des animations et des effets intéressants dans les applications graphiques en temps réel.
