@@ -2,15 +2,75 @@
 title: 'Third post'
 description: 'Lorem ipsum dolor sit amet'
 pubDate: 'Jul 22 2022'
-heroImage: '/blog-placeholder-2.jpg'
+heroImage: '/shader.png'
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+---
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+<video controls style="width: 100%; height: auto;">
+  <source src="/shader1.mp4" type="video/mp4">
+  Votre navigateur ne supporte pas la lecture de vidéos.
+</video>
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+---
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+
+
+## Créer un Shader Dynamique avec une Palette de Couleurs
+Dans ce post, je vais vous expliquer un shader que j'ai créé pour générer un effet visuel dynamique basé sur une palette de couleurs et un déplacement circulaire. Ce shader utilise GLSL pour afficher des motifs lumineux et colorés qui se déplacent en fonction du temps, créant un effet visuel fluide et vibrant.
+
+### Comprendre le Shader
+Le but principal de ce shader est de créer une animation où une couleur change en fonction de la distance par rapport à un point central, et qui évolue au fil du temps. Examinons les différentes parties du code.
+
+## Fonction palette(float t)
+La fonction palette génère une couleur dynamique basée sur la valeur de t. Elle utilise des fonctions trigonométriques pour créer une variation de couleur fluide et continue, créant ainsi un effet de cycle de couleurs qui varie selon le temps.
+
+```glsl
+vec3 palette(float t)  //I was inspired by ianlieberman07 
+{
+    vec3 a = vec3(0.5, 0.5, 0.5);
+    vec3 b = vec3(0.5, 0.5, 0.5);
+    vec3 c = vec3(1.0, 1.0, 1.0);
+    vec3 d = vec3(0.263, 0.416, 0.557);
+    return a + b * cos(6.28318 * (c * t + d));
+}
+```
+Cette fonction produit un effet visuel qui varie entre différentes teintes de couleurs au fur et à mesure que le temps évolue.
+
+## Fonction mainImage
+La fonction mainImage est responsable de l'affichage du shader. Elle prend en compte les coordonnées de chaque pixel à l'écran et applique l'animation définie par le shader. La position des pixels est modifiée en fonction du temps, créant un mouvement fluide de l'effet.
+
+```glsl
+void mainImage(out vec4 fragColor, in vec2 fragCoord)
+{
+    vec2 uv = fragCoord / iResolution.xy;
+    
+    uv.x *= iResolution.x / iResolution.y;
+    
+    float time = iTime *  5.0;
+    
+    vec2 pos = mod(uv * 10.0 + time, 1.0) - 1.8;
+    
+    float dist = length(pos);
+    
+    vec3 color = palette(dist + time);
+    
+    float glow = smoothstep(1.1, 1.1, 6.5 - dist);
+    
+    color *= glow;
+    
+    fragColor = vec4(color, 1.0);
+}
+```
+## Détails de la fonction mainImage
+Les coordonnées de chaque pixel sont normalisées par fragCoord / iResolution.xy.
+La variable time est utilisée pour animer le shader et faire bouger l'effet.
+Le calcul mod(uv * 10.0 + time, 1.0) permet de créer un motif circulaire animé.
+La distance par rapport au centre est calculée avec length(pos), ce qui permet de créer un effet de "pulsation" autour du centre.
+La fonction smoothstep est utilisée pour adoucir la transition de l'effet de lumière à la périphérie du cercle, donnant l'illusion d'un "glow".
+Résultat Final
+Le résultat final est un motif dynamique de couleurs qui change au fur et à mesure que le temps passe. Les couleurs varient selon la distance des pixels par rapport au centre et évoluent dans un cycle fluide.
+
+## Conclusion
+Ce shader est un excellent exemple de l'utilisation de fonctions trigonométriques et de la manipulation de la position des pixels pour créer des effets visuels animés en temps réel. Grâce à la fonction palette, on peut facilement obtenir un effet de dégradé de couleurs fluide et dynamique. Ce type d'effet peut être utilisé dans diverses applications graphiques, comme des arrière-plans animés, des effets de lumière, ou même des jeux.

@@ -2,7 +2,7 @@
 title: 'Shader Dynamique pour Sprites Animés'
 description: 'Un shader animé avec des couleurs arc-en-ciel et des sprites en mouvement pour des effets visuels dynamiques.'
 pubDate: '2024-12-19'
-heroImage: '/namakemono.jpg'
+heroImage: '/nynacatshader.png'
 ---
 
 ## Résumé
@@ -18,7 +18,7 @@ heroImage: '/namakemono.jpg'
 ---
 
 <video controls style="width: 100%; height: auto;">
-  <source src="/test3.mp4" type="video/mp4">
+  <source src="/nyan.mp4" type="video/mp4">
   Votre navigateur ne supporte pas la lecture de vidéos.
 </video>
 
