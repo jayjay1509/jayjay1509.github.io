@@ -1,7 +1,7 @@
 ---
-title: 'Third post'
+title: 'shader color Palette'
 description: 'Lorem ipsum dolor sit amet'
-pubDate: 'Jul 22 2022'
+pubDate: 'jan 30 2025'
 heroImage: '/shader.png'
 ---
 
