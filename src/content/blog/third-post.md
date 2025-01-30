@@ -8,69 +8,66 @@ heroImage: '/shader.png'
 ---
 
 <video controls style="width: 100%; height: auto;">
-  <source src="/shader1.mp4" type="video/mp4">
-  Votre navigateur ne supporte pas la lecture de vidéos.
+<source src="/shader1.mp4" type="video/mp4">
+Your browser does not support video playback.
 </video>
 
 ---
 
+## Create a Dynamic Shader with a Color Palette
+In this post, I will explain a shader that I created to generate a dynamic visual effect based on a color palette and a circular movement. This shader uses GLSL to display bright and colorful patterns that move according to time, creating a fluid and vibrant visual effect.
 
+### Understanding the Shader
+The main purpose of this shader is to create an animation where a color changes based on the distance from a central point, and that changes over time. Let's look at the different parts of the code.
 
-
-## Créer un Shader Dynamique avec une Palette de Couleurs
-Dans ce post, je vais vous expliquer un shader que j'ai créé pour générer un effet visuel dynamique basé sur une palette de couleurs et un déplacement circulaire. Ce shader utilise GLSL pour afficher des motifs lumineux et colorés qui se déplacent en fonction du temps, créant un effet visuel fluide et vibrant.
-
-### Comprendre le Shader
-Le but principal de ce shader est de créer une animation où une couleur change en fonction de la distance par rapport à un point central, et qui évolue au fil du temps. Examinons les différentes parties du code.
-
-## Fonction palette(float t)
-La fonction palette génère une couleur dynamique basée sur la valeur de t. Elle utilise des fonctions trigonométriques pour créer une variation de couleur fluide et continue, créant ainsi un effet de cycle de couleurs qui varie selon le temps.
+## Function palette(float t)
+The palette function generates a dynamic color based on the value of t. It uses trigonometric functions to create a smooth and continuous color variation, creating a color cycling effect that varies over time.
 
 ```glsl
-vec3 palette(float t)  //I was inspired by ianlieberman07 
+vec3 palette(float t) //I was inspired by ianlieberman07
 {
-    vec3 a = vec3(0.5, 0.5, 0.5);
-    vec3 b = vec3(0.5, 0.5, 0.5);
-    vec3 c = vec3(1.0, 1.0, 1.0);
-    vec3 d = vec3(0.263, 0.416, 0.557);
-    return a + b * cos(6.28318 * (c * t + d));
+vec3 a = vec3(0.5, 0.5, 0.5);
+vec3 b = vec3(0.5, 0.5, 0.5);
+vec3 c = vec3(1.0, 1.0, 1.0);
+vec3 d = vec3(0.263, 0.416, 0.557);
+return a + b * cos(6.28318 * (c * t + d));
 }
 ```
-Cette fonction produit un effet visuel qui varie entre différentes teintes de couleurs au fur et à mesure que le temps évolue.
+This function produces a visual effect that varies between different color hues as time passes.
 
-## Fonction mainImage
-La fonction mainImage est responsable de l'affichage du shader. Elle prend en compte les coordonnées de chaque pixel à l'écran et applique l'animation définie par le shader. La position des pixels est modifiée en fonction du temps, créant un mouvement fluide de l'effet.
+## mainImage Function
+The mainImage function is responsible for displaying the shader. It takes into account the coordinates of each pixel on the screen and applies the animation defined by the shader. The position of the pixels is changed over time, creating a smooth movement of the effect.
 
 ```glsl
 void mainImage(out vec4 fragColor, in vec2 fragCoord)
 {
-    vec2 uv = fragCoord / iResolution.xy;
-    
-    uv.x *= iResolution.x / iResolution.y;
-    
-    float time = iTime *  5.0;
-    
-    vec2 pos = mod(uv * 10.0 + time, 1.0) - 1.8;
-    
-    float dist = length(pos);
-    
-    vec3 color = palette(dist + time);
-    
-    float glow = smoothstep(1.1, 1.1, 6.5 - dist);
-    
-    color *= glow;
-    
-    fragColor = vec4(color, 1.0);
+vec2 uv = fragCoord / iResolution.xy;
+
+uv.x *= iResolution.x / iResolution.y;
+
+float time = iTime * 5.0;
+
+vec2 pos = mod(uv * 10.0 + time, 1.0) - 1.8;
+
+float dist = length(pos);
+
+vec3 color = palette(dist + time);
+
+float glow = smoothstep(1.1, 1.1, 6.5 - dist);
+
+color *= glow;
+
+fragColor = vec4(color, 1.0);
 }
 ```
-## Détails de la fonction mainImage
-Les coordonnées de chaque pixel sont normalisées par fragCoord / iResolution.xy.
-La variable time est utilisée pour animer le shader et faire bouger l'effet.
-Le calcul mod(uv * 10.0 + time, 1.0) permet de créer un motif circulaire animé.
-La distance par rapport au centre est calculée avec length(pos), ce qui permet de créer un effet de "pulsation" autour du centre.
-La fonction smoothstep est utilisée pour adoucir la transition de l'effet de lumière à la périphérie du cercle, donnant l'illusion d'un "glow".
-Résultat Final
-Le résultat final est un motif dynamique de couleurs qui change au fur et à mesure que le temps passe. Les couleurs varient selon la distance des pixels par rapport au centre et évoluent dans un cycle fluide.
+## MainImage Function Details
+The coordinates of each pixel are normalized by fragCoord / iResolution.xy.
+The time variable is used to animate the shader and make the effect move.
+The mod(uv * 10.0 + time, 1.0) calculation creates an animated circular pattern.
+The distance from the center is calculated with length(pos), which creates a "pulsing" effect around the center.
+The smoothstep function is used to smooth the transition of the light effect at the periphery of the circle, giving the illusion of a "glow".
+Final Result
+The final result is a dynamic pattern of colors that changes as time passes. The colors vary depending on the distance of the pixels from the center and evolve in a smooth cycle.
 
 ## Conclusion
-Ce shader est un excellent exemple de l'utilisation de fonctions trigonométriques et de la manipulation de la position des pixels pour créer des effets visuels animés en temps réel. Grâce à la fonction palette, on peut facilement obtenir un effet de dégradé de couleurs fluide et dynamique. Ce type d'effet peut être utilisé dans diverses applications graphiques, comme des arrière-plans animés, des effets de lumière, ou même des jeux.
+This shader is a great example of using trigonometric functions and manipulating pixel position to create animated visual effects in real time. With the palette function, a smooth and dynamic color gradient effect can be easily achieved. This type of effect can be used in a variety of graphics applications, such as animated backgrounds, lighting effects, or even games.

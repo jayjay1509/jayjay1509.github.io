@@ -1,58 +1,57 @@
 ---
-title: 'Shader Dynamique pour Sprites Animés'
-description: 'Un shader animé avec des couleurs arc-en-ciel et des sprites en mouvement pour des effets visuels dynamiques.'
+title: 'Dynamic Shader for Animated Sprites'
+description: 'An animated shader with rainbow colors and moving sprites for dynamic visual effects.'
 pubDate: '2024-12-19'
 heroImage: '/nynacatshader.png'
 ---
 
-## Résumé
+## Summary
 
-1. [Présentation du Shader](#présentation-du-shader)
-2. [Détails du Code](#détails-du-code)
-    - [Fonction `rand`](#fonction-rand)
-    - [Fonction `rainbow`](#fonction-rainbow)
-    - [Calcul des Positions des Sprites](#calcul-des-positions-des-sprites)
-    - [Mélange des Couleurs et Animation](#mélange-des-couleurs-et-animation)
+1. [Shader Overview](#shader-overview)
+2. [Code Details](#code-details)
+- [`rand` Function](#rand-function)
+- [`rainbow` Function](#rainbow-function)
+- [Sprite Position Calculation](#sprite-position-calculation)
+- [Color Mixing and Animation](#color-mixing-and-animation)
 3. [Conclusion](#conclusion)
 
 ---
 
 <video controls style="width: 100%; height: auto;">
-  <source src="/nyan.mp4" type="video/mp4">
-  Votre navigateur ne supporte pas la lecture de vidéos.
+<source src="/nyan.mp4" type="video/mp4">
+Your browser does not support playback of videos.
+
 </video>
 
 ---
 
-## Présentation du Shader
+## Shader Overview
 
-Dans ce post, je vais expliquer comment j'ai créé un shader dynamique qui génère des sprites animés avec un effet de couleur arc-en-ciel. Chaque sprite se déplace légèrement de manière aléatoire et change de couleur au fil du temps, créant un effet visuel attrayant pour des applications graphiques en temps réel. Ce shader utilise GLSL et repose sur des principes de base comme la manipulation des positions et des couleurs à l’aide du temps.
+In this post, I'll explain how I created a dynamic shader that generates animated sprites with a rainbow-colored effect. Each sprite moves slightly randomly and changes color over time, creating an attractive visual effect for real-time graphics applications. This shader uses GLSL and relies on basic principles like manipulating positions and colors using time.
 
-## Détails du Code
+## Code Details
 
-### Fonction `rand`
+### `rand` Function
 
-La fonction `rand` génère une valeur pseudo-aléatoire basée sur un vecteur d'entrée. Elle utilise des fonctions mathématiques comme `sin` et `dot` pour produire un bruit qui permet de décaler légèrement la position des sprites, afin d'éviter qu'ils ne soient trop réguliers dans leur disposition.
+The `rand` function generates a pseudo-random value based on an input vector. It uses mathematical functions like `sin` and `dot` to produce noise that allows the sprites to be slightly offset, to prevent them from being too regular in their layout.
 
 ```glsl
 float rand(vec2 co) {
-    float timeSeed = iTime * 1000.0;
-    return fract(sin(dot(co , vec2(12.9898, 78.233))) * 43758.5453);
+float timeSeed = iTime * 1000.0;
+return fract(sin(dot(co , vec2(12.9898, 78.233))) * 43758.5453);
 }
 
-
-
-### Fonction rainbow(float t)
-La fonction rainbow génère un dégradé de couleurs basé sur le temps t. Elle utilise une combinaison de valeurs trigonométriques pour créer un effet de cycle de couleurs arc-en-ciel. Cela ajoute un effet dynamique aux sprites, qui changent de couleur au fur et à mesure que le temps avance.
+### Function rainbow(float t)
+The rainbow function generates a color gradient based on time t. It uses a combination of trigonometric values ​​to create a rainbow color cycle effect. This adds a dynamic effect to the sprites, which change color as time progresses.
 
 ```glsl
 vec3 rainbow(float t) {
-    return 0.5 + 0.5 * cos(t + vec3(0.0, 2.0, 4.0));
+return 0.5 + 0.5 * cos(t + vec3(0.0, 2.0, 4.0));
 }
 ```
 
-### La Fonction mainImage
-C'est ici que la magie opère. La fonction mainImage est responsable de l'affichage des sprites. Le fragment shader prend les coordonnées de l'écran (dans fragCoord) et les normalise en coordonnées de texture avec uv. Ensuite, il définit le nombre de sprites à afficher sur l'axe x et y avec les variables numSpritesX et numSpritesY.
+### The mainImage Function
+This is where the magic happens. The mainImage function is responsible for displaying the sprites. The fragment shader takes the screen coordinates (in fragCoord) and normalizes them to texture coordinates with uv. Then, it sets the number of sprites to display on the x and y axis with the variables numSpritesX and numSpritesY.
 
 ```glsl
 vec2 uv = fragCoord.xy / iResolution.xy;
@@ -60,10 +59,10 @@ int numSpritesX = 10;
 int numSpritesY = 10;
 ```
 
-Le temps est également utilisé pour animer les sprites avec `frame = floor(mod(iTime * 10.0, 6.0));`, ce qui crée une animation en fonction du temps. Le `frame` permet de changer les sprites au fur et à mesure que le temps passe, en leur donnant une sensation de changement d'état.
+Time is also used to animate the sprites with `frame = floor(mod(iTime * 10.0, 6.0));`, which creates a time-based animation. The `frame` allows the sprites to change as time passes, giving them a sense of changing state.
 
-### Position des Sprites et Déplacement Aléatoire
-Les positions des sprites sont calculées dans la boucle imbriquée pour les axes x et y. La position initiale est déterminée par les coordonnées de la grille, mais j'ajoute une composante aléatoire pour que chaque sprite ait un petit décalage. De plus, chaque sprite se déplace au fil du temps avec un effet sinusoïdal, ce qui donne un mouvement fluide.
+### Sprite Positions and Random Movement
+The sprite positions are calculated in the nested loop for the x and y axes. The initial position is determined by the grid coordinates, but I add a random component so that each sprite has a small offset. Additionally, each sprite moves over time with a sinusoidal effect, giving a smooth motion.
 
 ```glsl
 vec2 spritePos = vec2(float(x) * spacingX, float(y) * spacingY);
@@ -73,20 +72,20 @@ spritePos.x += sin(iTime * 5.0 + float(x)) * 0.18;
 spritePos.y += sin(iTime * 5.0 + float(y)) * 0.18;
 ```
 
-### Mélange des Couleurs et Animation
-Ensuite, je mélange la couleur de base avec celle du sprite. J'utilise l'effet arc-en-ciel généré précédemment pour créer une traînée colorée. Cette traînée suit les sprites à mesure qu'ils se déplacent. Le calcul de l'alpha permet de mélanger progressivement les couleurs du sprite avec la couleur d'arrière-plan, tout en prenant en compte la transparence des pixels du sprite.
+### Color Blending and Animation
+Next, I blend the base color with the sprite color. I use the rainbow effect I generated earlier to create a colored trail. This trail follows the sprites as they move. The alpha calculation allows the sprite colors to gradually blend with the background color, while taking into account the transparency of the sprite pixels.
 
 ```glsl
-float rainbowTime = iTime + length(spritePos);  
-vec3 rainbowColor = rainbow(rainbowTime * 0.5); 
-vec3 trailColor = rainbowColor * 0.6; 
+float rainbowTime = iTime + length(spritePos);
+vec3 rainbowColor = rainbow(rainbowTime * 0.5);
+vec3 trailColor = rainbowColor * 0.6;
 baseColor.rgb = mix(baseColor.rgb, trailColor, 0.5);
 ```
 
-L'effet arc-en-ciel est combiné avec la couleur du sprite à chaque étape de l'animation, ce qui donne une sensation de mouvement fluide et coloré.
+The rainbow effect is combined with the sprite color at each step of the animation, giving a sense of fluid and colorful movement.
 
-## Résultat Final
-Le résultat final est une grille de sprites animés qui se déplacent légèrement tout en affichant un dégradé arc-en-ciel dynamique. Cela crée un effet visuel intéressant et vibrant, avec des couleurs qui évoluent lentement au fur et à mesure que le temps passe.
+## Final Result
+The final result is a grid of animated sprites that move slightly while displaying a dynamic rainbow gradient. This creates an interesting and vibrant visual effect, with colors that slowly change as time passes.
 
 ## Conclusion
-Ce shader est un excellent exemple de la façon dont on peut manipuler les couleurs et les positions des objets en temps réel dans un shader GLSL. En utilisant des fonctions comme rand, sin, et cos, on peut obtenir des effets visuels fluides et dynamiques qui réagissent au temps et à l'environnement. Cela offre une grande flexibilité pour créer des animations et des effets intéressants dans les applications graphiques en temps réel.
+This shader is a great example of how you can manipulate the colors and positions of objects in real time in a GLSL shader. By using functions like rand, sin, and cos, you can achieve fluid and dynamic visual effects that react to time and the environment. This provides a great deal of flexibility
