@@ -96,11 +96,12 @@ using this normal map texture:
 ## Shadow Map
 
 
-## Deferred rendering
+## Deferred rendering SSAO
+  
 
+![blog placeholder](/3d_scene12.png)
 
-## SSAO
-
+![blog placeholder](/3d_scene13.png)
 
 ## Gamma correction
 
