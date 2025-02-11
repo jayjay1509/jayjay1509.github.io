@@ -1,31 +1,97 @@
 ---
-title: 'Using MDX'
+title: '3D Scene'
 description: 'Lorem ipsum dolor sit amet'
-pubDate: 'Jun 01 2024'
-heroImage: '/blog-placeholder-5.jpg'
+pubDate: '02.11.2025'
+heroImage: '/blog-placeholder-4.jpg'
 ---
 
-This theme comes with the [@astrojs/mdx](https://docs.astro.build/en/guides/integrations-guide/mdx/) integration installed and configured in your `astro.config.mjs` config file. If you prefer not to use MDX, you can disable support by removing the integration from your config file.
+## What is this 3D scene ?
 
-## Why MDX?
+This is a 3D scene made with openGL. 
 
-MDX is a special flavor of Markdown that supports embedded JavaScript & JSX syntax. This unlocks the ability to [mix JavaScript and UI Components into your Markdown content](https://docs.astro.build/en/guides/markdown-content/#mdx-features) for things like interactive charts or alerts.
+## what's in this 3D scene ?
 
-If you have existing content authored in MDX, this integration will hopefully make migrating to Astro a breeze.
+In this 3D scene there is:
+- 3D model loading
+- Cubemaps
+- Back face culling
+- Frustum Culling
+- Blinn-Phong shading model
+- Framebuffer
+- Bloom
+- instancing
+- Normal map
+- Shadow Map
+- Deferred rendering
+- SSAO
+- Gamma correction
 
-## Example
+## 3D model loading
 
-Here is how you import and use a UI component inside of MDX.  
-When you open this page in the browser, you should see the clickable button below.
+the first thing that was made was loading a 3D model in GLTF with Assimp 
+![blog placeholder](/3Dloading.png)
 
-import HeaderLink from '../../components/HeaderLink.astro';
+## Cubemap
 
-<HeaderLink href="#" onclick="alert('clicked!')">
-	Embedded component in MDX
-</HeaderLink>
+the cubmap was also loded with Assimp 
+![blog placeholder](/cubemapModel.png)
 
-## More Links
+## Back face culling
 
-- [MDX Syntax Documentation](https://mdxjs.com/docs/what-is-mdx)
-- [Astro Usage Documentation](https://docs.astro.build/en/guides/markdown-content/#markdown-and-mdx-pages)
-- **Note:** [Client Directives](https://docs.astro.build/en/reference/directives-reference/#client-directives) are still required to create interactive components. Otherwise, all components in your MDX will render as static HTML (no JavaScript) by default.
+after this the back face culling was added 
+![blog placeholder](/backFaceCull.png)
+
+## Frustum Culling
+
+the frustum culling was also added to enhance the perfoemences
+
+<video controls style="width: 100%; height: auto;">
+  <source src="/frustum.mp4" type="video/mp4">
+  Votre navigateur ne supporte pas la lecture de vidéos.
+</video>
+
+## Blinn-Phong shading model
+
+a Blinn-Phong was added for the lightning 
+![blog placeholder](/Blinn-Phong.png)
+
+## Framebuffer
+
+a frame buffer was added to be abble to add some after effect like the bloom
+
+## Bloom
+
+thanks to the frame buffer we can now add some bloom
+
+with out bloom:
+![blog placeholder](/nb.png)
+
+with bloom:
+![blog placeholder](/yb.png)
+
+## Instancing
+
+there is some instancing whith the 3000 trees
+![blog placeholder](/instancing.png)
+
+## Normal map
+
+there is also some normal maping on the brick ground
+![blog placeholder](/normal.png)
+
+using this normal map texture:
+![blog placeholder](/brickwall_normal.jpg)
+
+
+
+
+## Shadow Map
+
+
+## Deferred rendering
+
+
+## SSAO
+
+
+## Gamma correction
