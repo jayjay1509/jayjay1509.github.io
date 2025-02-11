@@ -103,3 +103,11 @@ using this normal map texture:
 
 
 ## Gamma correction
+
+there is also some gamma correction 
+
+low gamma correction : 
+![blog placeholder](/3d_scene11.png)
+
+high gamma correction :
+![blog placeholder](/3d_scene10.png)
