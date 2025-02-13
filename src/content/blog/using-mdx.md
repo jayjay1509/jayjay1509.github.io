@@ -93,15 +93,22 @@ using this normal map texture:
 
 
 
-## Shadow Map
+## Tracy 
+In these images, we’re examining performance profiling data from a 3D rendering project in C++. 
+Each screenshot highlights the “Update” function’s timing, including GPU execution time, CPU command setup time, and the delay before the GPU begins processing.
+By visualizing these metrics, we can pinpoint potential bottlenecks—whether in rendering, data transfer, or synchronization—and make informed optimizations to improve overall frame performance.
 
-
+![blog placeholder](/tracy1.png)
+![blog placeholder](/tracy2.png)
+![blog placeholder](/tracy3.png)
+![blog placeholder](/tracy4.png)
+![blog placeholder](/tracy5.png)
 ## Deferred rendering SSAO
   
 
 ![blog placeholder](/3d_scene12.png)
 
-![blog placeholder](/3d_scene13.png)
+![blog placeholder](/3d_scene13s.png)
 
 ## Gamma correction
 
