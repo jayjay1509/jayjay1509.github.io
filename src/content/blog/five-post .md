@@ -2,7 +2,7 @@
 title: 'Bomb System – Unreal Engine'
 description: 'Implementation of an interactive and modular bomb system in Blueprint'
 pubDate: '2026-03-20'
-heroImage: '/bomb.jpg'
+heroImage: '/bombe1.png'
 ---
 
 ## Summary
@@ -16,7 +16,7 @@ heroImage: '/bomb.jpg'
 
 ---
 
-![Bomb Blueprint](/bomb_blueprint.png)
+![blog placeholder](/bombe2.png)
 
 ---
 

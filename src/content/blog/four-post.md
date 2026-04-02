@@ -1,33 +1,46 @@
 ---
-title: 'Gestion de l’inventaire dans le Widget'
-description: 'Comment j’ai implémenté et analysé un système d’inventaire directement dans l’interface utilisateur de mon jeu'
-pubDate: 'mar 12 2026'
-heroImage: '/shader.png'
+title: 'Inventory Management in UI Widget'
+description: 'How I implemented and analyzed an inventory system directly inside the user interface of my game'
+pubDate: 'Mar 12 2026'
+heroImage: '/Inventaire_1.png'
 ---
 
 ---
 
-<video controls style="width: 100%; height: auto;">
-<source src="/inventory_demo.mp4" type="video/mp4">
-Your browser does not support video playback.
-</video>
 
----
 
-## Implémentation de l’inventaire dans l’interface utilisateur
+## Inventory Implementation in the User Interface
 
-Pour développer le système d’inventaire de mon jeu, j’ai choisi de gérer toute la logique directement dans le Widget de l’interface utilisateur. Cela signifie que l’ajout, la suppression et l’affichage des objets sont tous contrôlés dans ce widget.
+To develop the inventory system for my game, I chose to handle all the logic directly inside the UI Widget. This means that adding, removing, and displaying items are entirely managed within the interface itself.
 
-Cette approche m’a permis de créer rapidement un inventaire fonctionnel. Le widget gère la liste des objets et utilise une Data Table pour récupérer les informations liées aux items, comme leur nom, leur icône ou leur description.
+This approach allowed me to quickly build a fully functional inventory system. The widget maintains a list of items and uses a Data Table to retrieve all the necessary information related to each item, such as its name, icon, and description. This method avoids hardcoding values and makes the system more flexible and easier to expand.
 
-Cependant, avec le recul, je me rends compte que cette solution n’est pas la plus optimale. En effet, la logique du jeu devrait normalement être séparée de l’interface utilisateur. Idéalement, le système d’inventaire devrait être géré par une classe dédiée (par exemple dans le Player ou un composant d’inventaire) et le widget devrait seulement servir à afficher les données.
+From a prototyping perspective, this solution was very efficient. It allowed me to focus on user experience, visual feedback, and interactions without spending too much time on architecture at the beginning. Since everything was centralized, debugging was also simpler during early development.
 
-Même si mon système actuel fonctionne correctement, cette expérience m’a permis de comprendre l’importance de séparer la logique du gameplay et l’interface utilisateur. Cela rend le code plus propre, plus réutilisable et plus facile à maintenir dans un projet plus complexe.
+![blog placeholder](/inv2.png)
 
-## Leçons apprises
+However, with more experience and hindsight, I realized that this approach is not optimal for scalability or long-term maintenance. By placing gameplay logic directly inside the UI, I created a strong dependency between the interface and the core systems of the game.
 
-- **Séparation des responsabilités** : la logique de gameplay doit être indépendante de l’UI.  
-- **Réutilisabilité du code** : un système centralisé est plus facile à adapter à différents types d’inventaires.  
-- **Maintenance simplifiée** : corriger ou ajouter des fonctionnalités devient plus rapide et sûr.  
+In a more robust architecture, the inventory system should be handled by a dedicated gameplay class, such as a Player class or an Inventory Component. This system would manage all item-related logic (adding, removing, updating), while the UI would only be responsible for displaying the data and reacting to changes through events or bindings.
 
-Cette réflexion fait partie du processus d’apprentissage et m’aidera à améliorer l’architecture de mes futurs systèmes de jeu.
+Separating these responsibilities brings several important advantages. First, it improves code readability and organization, making it easier to understand and maintain. Second, it reduces coupling between systems, allowing each part of the game to evolve independently. Finally, it improves reusability, since the same inventory logic can be used across multiple interfaces such as menus, HUDs, or even multiplayer systems.
+
+Another important benefit is maintainability. When logic and UI are mixed together, modifying or extending the system becomes more complex and error-prone. By separating them, it becomes much easier to add new features or fix bugs without breaking existing functionality.
+
+Additionally, keeping logic outside of the UI can improve performance. UI systems are not designed to handle complex gameplay logic, and overloading them can lead to inefficiencies in larger projects.
+
+Despite its limitations, this implementation was a valuable learning experience. It helped me better understand how Unreal Engine widgets work, how to structure data using Data Tables, and how important good architecture is in game development.
+
+![blog placeholder](/inv1.png)
+
+## Lessons Learned
+Separation of Responsibilities: Gameplay logic should always be independent from the UI.
+Code Reusability: A centralized system can be reused across multiple features and interfaces.
+Maintainability: A clean separation makes debugging and updates easier.
+Scalability: UI-based logic becomes limiting as project complexity increases.
+Architecture Awareness: Planning system structure early helps avoid technical debt.
+## Conclusion
+
+This experience highlights a common trade-off in game development between speed and structure. While handling everything inside the widget allowed for rapid prototyping, it also revealed the limitations of this approach in a more advanced production context.
+
+In future projects, I will prioritize separating gameplay systems from the user interface. This will allow me to build more robust, scalable, and maintainable systems, better suited for professional game development.

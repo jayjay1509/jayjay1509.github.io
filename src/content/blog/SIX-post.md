@@ -2,7 +2,7 @@
 title: 'Inner Whale - Post Mortem'
 description: 'Technical and teamwork report for the Inner Whale project'
 pubDate: '2026-04-02'
-heroImage: '/inner-whale.jpg'
+heroImage: '/inwall1.png'
 ---
 
 ## 1. Introduction
@@ -42,6 +42,8 @@ Diving deeper into the concept of game feel and applying it directly to the proj
 Learning and applying level design principles had a strong positive impact on the project. It helped create more engaging environments, guided player movement effectively, and supported the gameplay mechanics, resulting in clearer and more enjoyable player experiences.
 
 ---
+
+![blog placeholder](/inwall2.png)
 
 ### 2.2 Difficulties and Areas for Improvement
 
@@ -93,10 +95,10 @@ The support from the different people following our project, as well as the inte
 #### 3.1.6 Risk sheet and milestone reviews
 
 The implementation of a risk management sheet made it possible to anticipate several potential issues. Combined with milestone reviews, it encouraged questioning of the choices made and the difficulties encountered during each milestone, as well as discussions on possible areas for improvement
----
+
 
 ### 3.2 Difficulties and Areas for Improvement
-
+---
 #### 3.2.1 Tasks Distribution
 
 One of the main issues encountered during the project was the lack of a clear leadership. No single person was fully responsible for driving the project forward, which led to inefficiencies in task coordination. 
