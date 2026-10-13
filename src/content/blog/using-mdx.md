@@ -1,6 +1,6 @@
 ---
 title: '3D Scene'
-description: 'blogpost for 3d scene'
+description: 'Building a real-time 3D scene in C++: rendering, lighting, materials and normal mapping.'
 pubDate: '02.11.2025'
 heroImage: '/3d_scene1.png'
 ---

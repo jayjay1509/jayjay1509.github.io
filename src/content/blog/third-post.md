@@ -1,6 +1,6 @@
 ---
 title: 'shader color Palette'
-description: 'Lorem ipsum dolor sit amet'
+description: 'A GLSL shader that generates an animated, palette-driven color effect in real time.'
 pubDate: 'jan 30 2025'
 heroImage: '/shader.png'
 ---

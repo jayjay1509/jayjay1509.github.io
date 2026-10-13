@@ -1,6 +1,6 @@
 ---
 title: 'Namakemono'
-description: 'Lorem ipsum dolor sit amet'
+description: 'Building a custom 2D physics engine in C++: forces, collisions, triggers and a quadtree for fast broad-phase detection.'
 pubDate: '2024-11-20'
 heroImage: '/namakemono.jpg'
 ---
