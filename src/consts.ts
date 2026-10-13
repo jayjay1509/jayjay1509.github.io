@@ -9,7 +9,7 @@ export const AUTHOR = {
 	role: 'Software Developer — Systems, Simulation & AI',
 	location: 'Geneva, Switzerland',
 	// Add a public contact email here to show a "mailto" button (e.g. 'you@example.com').
-	email: '',
+	email: 'jayson.malet@gmail.com',
 	github: 'https://github.com/jayjay1509',
 	x: 'https://x.com/JaysonMalet',
 	itch: 'https://jayjay1509.itch.io/',

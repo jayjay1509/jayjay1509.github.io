@@ -217,6 +217,7 @@ const focus = [
 				<div class="cta">
 					<a class="btn btn-primary" href="/projects">View projects</a>
 					<a class="btn" href={AUTHOR.github} target="_blank" rel="noopener">GitHub</a>
+					{AUTHOR.email && <a class="btn" href={`mailto:${AUTHOR.email}`}>Contact me</a>}
 				</div>
 				<div class="meta">
 					<span>📍 {AUTHOR.location}</span>
