@@ -1,6 +1,8 @@
 ---
 import { AUTHOR } from '../consts';
+import { UI, getLang } from '../i18n';
 const today = new Date();
+const t = UI[getLang(Astro.url.pathname)];
 ---
 
 <footer>
@@ -33,7 +35,7 @@ const today = new Date();
 			</svg>
 		</a>
 	</div>
-	<p>&copy; {today.getFullYear()} Jayson Malet · Built with Astro</p>
+	<p>&copy; {today.getFullYear()} Jayson Malet · {t.footer}</p>
 </footer>
 <style>
 	footer {

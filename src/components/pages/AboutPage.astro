@@ -1,0 +1,104 @@
+---
+import BaseHead from '../BaseHead.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import { AUTHOR } from '../../consts';
+import { UI, getLang } from '../../i18n';
+
+const lang = getLang(Astro.url.pathname);
+const t = UI[lang];
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<BaseHead title={`${t.aboutTitle} — Jayson Malet`} description={t.siteDescription} />
+		<style>
+			.about-head {
+				padding: 1.5em 0 0.5em;
+			}
+			.prose p {
+				font-size: 1.05rem;
+				color: var(--text-dim);
+			}
+			.prose p strong {
+				color: var(--text);
+			}
+			h2 {
+				margin-top: 2em;
+			}
+			.skills {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1em;
+				margin-top: 1em;
+			}
+			.skill-group {
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 1em 1.2em;
+			}
+			.skill-group h3 {
+				font-size: 0.95rem;
+				color: var(--accent);
+				font-family: var(--font-mono);
+				margin-bottom: 0.6em;
+			}
+			.skill-group .tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4em;
+			}
+			.contact {
+				margin-top: 2.5em;
+				display: flex;
+				gap: 0.8em;
+				flex-wrap: wrap;
+			}
+			@media (max-width: 640px) {
+				.skills {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="about-head">
+				<p class="eyebrow">{t.aboutTitle}</p>
+				<h1>Jayson Malet</h1>
+			</div>
+
+			<div class="prose">
+				{t.about.map((para) => <p set:html={para} />)}
+			</div>
+
+			<h2>{t.skillsTitle}</h2>
+			<div class="skills">
+				{
+					Object.entries(t.skills).map(([group, items]) => (
+						<div class="skill-group">
+							<h3>{t.skillLabels[group] ?? group}</h3>
+							<div class="tags">
+								{items.map((s) => (
+									<span class="tag">{s}</span>
+								))}
+							</div>
+						</div>
+					))
+				}
+			</div>
+
+			<h2>{t.contactTitle}</h2>
+			<p class="muted">{t.contactText}</p>
+			<div class="contact">
+				<a class="btn btn-primary" href={AUTHOR.github} target="_blank" rel="noopener">GitHub</a>
+				<a class="btn" href={AUTHOR.x} target="_blank" rel="noopener">X / Twitter</a>
+				{AUTHOR.email && <a class="btn" href={`mailto:${AUTHOR.email}`}>{t.email}</a>}
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

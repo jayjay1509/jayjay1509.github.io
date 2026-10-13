@@ -1,17 +1,23 @@
 ---
 import HeaderLink from './HeaderLink.astro';
+import LangSwitch from './LangSwitch.astro';
 import { SITE_TITLE, AUTHOR } from '../consts';
+import { UI, getLang, localePath } from '../i18n';
+
+const lang = getLang(Astro.url.pathname);
+const t = UI[lang];
 ---
 
 <header>
 	<nav>
-		<a class="brand" href="/">{SITE_TITLE}</a>
+		<a class="brand" href={localePath(lang, '/')}>{SITE_TITLE}</a>
 		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/projects">Projects</HeaderLink>
-			<HeaderLink href="/blog">Writing</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href={localePath(lang, '/')}>{t.nav.home}</HeaderLink>
+			<HeaderLink href={localePath(lang, '/projects')}>{t.nav.projects}</HeaderLink>
+			<HeaderLink href={localePath(lang, '/blog')}>{t.nav.writing}</HeaderLink>
+			<HeaderLink href={localePath(lang, '/about')}>{t.nav.about}</HeaderLink>
 		</div>
+		<LangSwitch />
 		<div class="social-links">
 			<a href={AUTHOR.github} target="_blank" rel="noopener">
 				<span class="sr-only">GitHub</span>

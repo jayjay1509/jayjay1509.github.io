@@ -1,0 +1,130 @@
+---
+import BaseHead from '../BaseHead.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import { AUTHOR } from '../../consts';
+import { PROJECTS } from '../../projects';
+import { UI, getLang } from '../../i18n';
+
+const lang = getLang(Astro.url.pathname);
+const t = UI[lang];
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<BaseHead title={`${t.nav.projects} — Jayson Malet`} description={t.siteDescription} />
+		<style>
+			.page-head {
+				padding: 1.5em 0 0.5em;
+			}
+			.page-head p {
+				max-width: 620px;
+			}
+			.list {
+				display: flex;
+				flex-direction: column;
+				gap: 1.4em;
+				margin-top: 2em;
+			}
+			.card {
+				display: grid;
+				grid-template-columns: 220px 1fr;
+				gap: 1.5em;
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				overflow: hidden;
+				transition: border-color 0.15s ease;
+			}
+			.card:hover {
+				border-color: var(--accent-strong);
+			}
+			.card .thumb {
+				width: 100%;
+				height: 100%;
+				min-height: 160px;
+				object-fit: cover;
+				border-radius: 0;
+				display: block;
+			}
+			.card.no-img {
+				grid-template-columns: 1fr;
+			}
+			.body {
+				padding: 1.3em 1.4em 1.4em;
+			}
+			.card.no-img .body {
+				padding: 1.4em;
+			}
+			.body h2 {
+				font-size: 1.3rem;
+				margin-bottom: 0.4em;
+			}
+			.body p {
+				font-size: 0.97rem;
+			}
+			.tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4em;
+				margin: 0.9em 0;
+			}
+			.links {
+				display: flex;
+				gap: 1.2em;
+				font-family: var(--font-mono);
+				font-size: 0.85rem;
+			}
+			@media (max-width: 640px) {
+				.card {
+					grid-template-columns: 1fr;
+				}
+				.card .thumb {
+					min-height: 0;
+					aspect-ratio: 16 / 9;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="page-head">
+				<p class="eyebrow">{t.nav.projects}</p>
+				<h1>{t.projectsPageTitle}</h1>
+				<p>
+					{t.projectsPageIntro} <a href={AUTHOR.github} target="_blank" rel="noopener">GitHub</a>.
+				</p>
+			</div>
+
+			<div class="list">
+				{
+					PROJECTS.map((p) => (
+						<article class:list={['card', { 'no-img': !p.image }]}>
+							{p.image && <img class="thumb" src={p.image} alt="" loading="lazy" />}
+							<div class="body">
+								<h2>{p.title[lang]}</h2>
+								<p>{p.blurb[lang]}</p>
+								<div class="tags">
+									{p.tags.map((t) => (
+										<span class="tag">{t}</span>
+									))}
+								</div>
+								<div class="links">
+									{p.repo && (
+										<a href={p.repo} target="_blank" rel="noopener">
+											{t.code}
+										</a>
+									)}
+									{p.link && <a href={p.link}>{t.writeup}</a>}
+								</div>
+							</div>
+						</article>
+					))
+				}
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

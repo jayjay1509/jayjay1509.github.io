@@ -1,0 +1,298 @@
+---
+import BaseHead from '../BaseHead.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import FormattedDate from '../FormattedDate.astro';
+import { SITE_TITLE, AUTHOR } from '../../consts';
+import { PROJECTS } from '../../projects';
+import { UI, getLang, localePath } from '../../i18n';
+import { getCollection } from 'astro:content';
+
+const lang = getLang(Astro.url.pathname);
+const t = UI[lang];
+
+const featured = PROJECTS.filter((p) => p.featured);
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<BaseHead title={SITE_TITLE} description={t.siteDescription} />
+		<style>
+			.hero {
+				padding: 2.5em 0 1em;
+			}
+			.hero h1 {
+				margin-bottom: 0.3em;
+			}
+			.hero .role {
+				font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+				color: var(--text);
+				font-weight: 700;
+				margin-bottom: 0.8em;
+			}
+			.hero .lede {
+				max-width: 640px;
+				font-size: 1.1rem;
+			}
+			.hero .cta {
+				display: flex;
+				gap: 0.8em;
+				flex-wrap: wrap;
+				margin-top: 1.6em;
+			}
+			.availability {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.55em;
+				font-size: 0.95rem;
+				color: var(--text);
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: 999px;
+				padding: 0.3em 0.9em;
+				margin: 0.4em 0 0;
+			}
+			.availability .dot {
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background: #34d399;
+				box-shadow: 0 0 8px #34d399;
+			}
+			.meta {
+				display: flex;
+				gap: 1.2em;
+				flex-wrap: wrap;
+				color: var(--text-faint);
+				font-family: var(--font-mono);
+				font-size: 0.85rem;
+				margin-top: 1.4em;
+			}
+
+			section {
+				margin-top: 3.5em;
+			}
+			.section-head {
+				display: flex;
+				align-items: baseline;
+				justify-content: space-between;
+				gap: 1em;
+				margin-bottom: 1.4em;
+			}
+			.section-head a {
+				font-family: var(--font-mono);
+				font-size: 0.85rem;
+				white-space: nowrap;
+			}
+
+			.focus-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1em;
+			}
+			.focus-card {
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 1.2em 1.3em;
+			}
+			.focus-card h3 {
+				font-size: 1.1rem;
+				margin-bottom: 0.3em;
+			}
+			.focus-card p {
+				margin: 0;
+				font-size: 0.95rem;
+			}
+
+			.proj-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1.2em;
+			}
+			.proj-card {
+				display: flex;
+				flex-direction: column;
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				overflow: hidden;
+				transition: border-color 0.15s ease, transform 0.15s ease;
+			}
+			.proj-card:hover {
+				border-color: var(--accent-strong);
+				transform: translateY(-2px);
+			}
+			.proj-card .thumb {
+				aspect-ratio: 16 / 9;
+				width: 100%;
+				object-fit: cover;
+				border-radius: 0;
+				display: block;
+				border-bottom: 1px solid var(--border);
+			}
+			.proj-body {
+				padding: 1.1em 1.2em 1.3em;
+				display: flex;
+				flex-direction: column;
+				gap: 0.6em;
+				flex: 1;
+			}
+			.proj-body h3 {
+				font-size: 1.1rem;
+				margin: 0;
+			}
+			.proj-body p {
+				margin: 0;
+				font-size: 0.92rem;
+				flex: 1;
+			}
+			.proj-tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4em;
+			}
+			.proj-links {
+				display: flex;
+				gap: 1em;
+				font-size: 0.85rem;
+				font-family: var(--font-mono);
+				margin-top: 0.3em;
+			}
+
+			.posts {
+				display: flex;
+				flex-direction: column;
+			}
+			.post-row {
+				display: flex;
+				align-items: baseline;
+				gap: 1em;
+				padding: 0.9em 0;
+				border-top: 1px solid var(--border);
+			}
+			.post-row:last-child {
+				border-bottom: 1px solid var(--border);
+			}
+			.post-row .date {
+				font-family: var(--font-mono);
+				font-size: 0.8rem;
+				color: var(--text-faint);
+				white-space: nowrap;
+				min-width: 110px;
+			}
+			.post-row a {
+				color: var(--text);
+				font-weight: 700;
+			}
+			.post-row a:hover {
+				color: var(--accent);
+			}
+
+			@media (max-width: 680px) {
+				.focus-grid,
+				.proj-grid {
+					grid-template-columns: 1fr;
+				}
+				.post-row {
+					flex-direction: column;
+					gap: 0.2em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<p class="eyebrow">{t.heroEyebrow}</p>
+				<h1>{t.heroTitle}</h1>
+				<p class="role">{t.heroRole}</p>
+				<p class="lede">{t.heroLede}</p>
+				<p class="availability"><span class="dot"></span>{t.heroAvailability}</p>
+				<div class="cta">
+					<a class="btn btn-primary" href={localePath(lang, '/projects')}>{t.ctaProjects}</a>
+					<a class="btn" href={AUTHOR.github} target="_blank" rel="noopener">GitHub</a>
+					{AUTHOR.email && <a class="btn" href={`mailto:${AUTHOR.email}`}>{t.ctaContact}</a>}
+				</div>
+				<div class="meta">
+					<span>📍 {AUTHOR.location}</span>
+					<span>🎓 {t.metaSchool}</span>
+					<span>💬 {t.metaLangs}</span>
+				</div>
+			</section>
+
+			<section>
+				<div class="section-head"><h2>{t.focusTitle}</h2></div>
+				<div class="focus-grid">
+					{
+						t.focus.map((f) => (
+							<div class="focus-card">
+								<h3>{f.title}</h3>
+								<p>{f.body}</p>
+							</div>
+						))
+					}
+				</div>
+			</section>
+
+			<section>
+				<div class="section-head">
+					<h2>{t.projectsTitle}</h2>
+					<a href={localePath(lang, '/projects')}>{t.allProjects}</a>
+				</div>
+				<div class="proj-grid">
+					{
+						featured.map((p) => (
+							<article class="proj-card">
+								{p.image && <img class="thumb" src={p.image} alt="" loading="lazy" />}
+								<div class="proj-body">
+									<h3>{p.title[lang]}</h3>
+									<p>{p.blurb[lang]}</p>
+									<div class="proj-tags">
+										{p.tags.slice(0, 4).map((t) => (
+											<span class="tag">{t}</span>
+										))}
+									</div>
+									<div class="proj-links">
+										{p.repo && (
+											<a href={p.repo} target="_blank" rel="noopener">
+												{t.code}
+											</a>
+										)}
+										{p.link && <a href={p.link}>{t.writeup}</a>}
+									</div>
+								</div>
+							</article>
+						))
+					}
+				</div>
+			</section>
+
+			<section>
+				<div class="section-head">
+					<h2>{t.writingTitle}</h2>
+					<a href={localePath(lang, '/blog')}>{t.allPosts}</a>
+				</div>
+				<div class="posts">
+					{
+						posts.map((post) => (
+							<div class="post-row">
+								<span class="date">
+									<FormattedDate date={post.data.pubDate} />
+								</span>
+								<a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+							</div>
+						))
+					}
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

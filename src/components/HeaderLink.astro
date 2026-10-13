@@ -5,9 +5,11 @@ type Props = HTMLAttributes<'a'>;
 
 const { href, class: className, ...props } = Astro.props;
 
-const { pathname } = Astro.url;
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === '/' + subpath?.[0];
+// Compare without the /fr prefix and trailing slash, so both languages highlight correctly.
+const strip = (p: string) => p.replace(/^\/fr(?=\/|$)/, '').replace(/\/$/, '') || '/';
+const current = strip(Astro.url.pathname);
+const target = strip(String(href));
+const isActive = target === '/' ? current === '/' : current === target || current.startsWith(target + '/');
 ---
 
 <a href={href} class:list={[className, { active: isActive }]} {...props}>
