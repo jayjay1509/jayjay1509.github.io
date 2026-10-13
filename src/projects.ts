@@ -16,10 +16,9 @@ export const PROJECTS: Project[] = [
 	{
 		title: 'Hana-no-saku-ki — Real-time Fluid Simulation',
 		blurb:
-			'Bachelor thesis: an interactive 2D water simulation built on cellular automata — no physics engine. Local rules (gravity, spreading, compression, pressure) produce emergent fluid behaviour in real time, with profiling-driven performance work.',
+			'Bachelor thesis: an interactive 2D water simulation built on cellular automata — no physics engine. Local rules (gravity, spreading, compression, pressure) produce emergent fluid behaviour in real time, with profiling-driven performance work (Tracy captures and CSV benchmarks to compare each optimisation pass).',
 		tags: ['C++20', 'SFML', 'ImGui', 'Tracy', 'Simulation', 'Performance'],
 		repo: 'https://github.com/jayjay1509/Hana-no-saku-ki',
-		image: '/3d_scene5.png',
 		featured: true,
 	},
 	{
@@ -60,13 +59,5 @@ export const PROJECTS: Project[] = [
 		link: '/blog/third-post/',
 		linkLabel: 'Read the write-up',
 		image: '/shader.png',
-	},
-	{
-		title: 'Hana-no-saku-ki benchmarking',
-		blurb:
-			'The measurement side of the simulation work: CSV benchmark export and Tracy integration to compare optimisation passes objectively rather than by feel.',
-		tags: ['C++', 'Benchmarking', 'Tracy', 'Profiling'],
-		repo: 'https://github.com/jayjay1509/Hana-no-saku-ki',
-		image: '/tracy1.png',
 	},
 ];
